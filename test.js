@@ -1,13 +1,14 @@
 const test = require("ava")
-const theModule = require(".")
+const { search, info } = require(".")
 
-test("main", (t) => {
-	t.throws(() => {
-		theModule(123)
-	}, {
-		instanceOf: TypeError,
-		message: "Expected a string, got number",
-	})
+test("npmsApi.search", async (t) => {
+	const data = await search("cross-spawn")
 
-	t.is(theModule("unicorns"), "unicorns & rainbows")
+	t.is(data.results[0].package.name, "cross-spawn")
+})
+
+test("npmsApi.info", async (t) => {
+	const data = await info("cross-spawn")
+
+	t.is(data.collected.metadata.name, "cross-spawn")
 })

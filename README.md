@@ -1,41 +1,69 @@
-# The module [![Travis CI Build Status](https://img.shields.io/travis/com/Richienb/the-module/master.svg?style=for-the-badge)](https://travis-ci.com/Richienb/the-module)
+# NPMS Api [![Travis CI Build Status](https://img.shields.io/travis/com/Richienb/npms-api/master.svg?style=for-the-badge)](https://travis-ci.com/Richienb/npms-api)
 
-My awesome module.
+A small wrapper around the [npms.io api](https://api-docs.npms.io/).
 
-[![NPM Badge](https://nodei.co/npm/the-module.png)](https://npmjs.com/package/the-module)
+[![NPM Badge](https://nodei.co/npm/npms-api.png)](https://npmjs.com/package/npms-api)
 
 ## Install
 
 ```sh
-npm install the-module
+npm install npms-api
 ```
 
 ## Usage
 
 ```js
-const theModule = require("the-module");
+const { search, info } = require("npms-api");
 
-theModule("unicorns");
-//=> 'unicorns & rainbows'
+(async () => {
+	await search("cross-spawn");
+	//=> { total: 45, results: [ { package: "cross-spawn", scope: "unscoped" ... } ... ] }
+
+	await info("cross-spawn");
+	//=> { analyzedAt: '2020-02-23T05:44:56.198Z', collected: { metadata: { name: "cross-spawn",  scope: "unscoped" ... } ... } ... }
+})();
 ```
 
 ## API
 
-### theModule(input, options?)
+### npmsApi.search(query, options?)
 
-#### input
+#### query
 
 Type: `string`
 
-Lorem ipsum.
+The query to search with.
 
 #### options
 
 Type: `object`
 
-##### postfix
+##### suggestions
 
-Type: `string`\
-Default: `rainbows`
+Type: `boolean`\
+Default: `false`
 
-Lorem ipsum.
+Return search suggestions.
+
+##### offset
+
+Type: `number`\
+Default: `0`
+
+The offset of the results. Not compatible with `suggestions`.
+
+##### results
+
+Type: `number`\
+Default: `25`
+
+The amount of results to return.
+
+### npmsApi.info(name)
+### npmsApi.info(names)
+
+#### name
+
+Type: `string|string[]`
+
+The name/names of the packages.

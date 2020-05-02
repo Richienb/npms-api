@@ -16,10 +16,10 @@ export namespace Result {
 			username: string
 			email: string
 		}
-		maintainers: {
+		maintainers: Array<{
 			username: string
 			email: string
-		}[]
+		}>
 	}
 
 	export interface ScoreData {
@@ -33,11 +33,11 @@ export namespace Result {
 
 	export interface Search {
 		total: number
-		results: {
+		results: Array<{
 			package: PackageData
 			score: ScoreData
 			searchScore: number
-		}[]
+		}>
 	}
 
 	export interface DateRangeData {
@@ -115,7 +115,7 @@ export namespace Result {
 			readmeSize: number
 			testsSize: number
 		}
-		badges: {
+		badges: Array<{
 			urls: {
 				original: string
 				service?: string
@@ -127,7 +127,7 @@ export namespace Result {
 				type: string
 				modifiers?: Record<string, string>
 			}
-		}[]
+		}>
 		linters: string[]
 	}
 
@@ -166,18 +166,17 @@ export namespace Result {
 }
 
 /**
- * Search for a package.
- * @param query The query to search with.
- * @param options Options.
- * @example
- * ```
- * const { search } = require("npms-api");
- *
- * (async () => {
- * 	await search("cross-spawn");
- * 	//=> { total: 45, results: [ { package: "cross-spawn", scope: "unscoped" ... } ... ] }
- * })();
- * ```
+Search for a package.
+@param query The query to search with.
+@param options Options.
+@example
+```
+const { search } = require("npms-api");
+(async () => {
+	await search("cross-spawn");
+	//=> { total: 45, results: [ { package: "cross-spawn", scope: "unscoped" ... } ... ] }
+})();
+```
 */
 export declare async function search(query: string, options?: ({
 	/** Return search suggestions. */
@@ -194,18 +193,17 @@ export declare async function search(query: string, options?: ({
 }): Promise<Result.Search>
 
 /**
- * Get the information about a package.
- * @param name The name of the package.
- * @param names The names of the packages.
- * @example
- * ```
- * const { info } = require("npms-api");
- *
- * (async () => {
- * 	await info("cross-spawn");
- * 	//=> { analyzedAt: '2020-02-23T05:44:56.198Z', collected: { metadata: { name: "cross-spawn",   * scope: "unscoped" ... } ... } ... }
- * })();
- * ```
+Get the information about a package.
+@param name The name of the package.
+@param names The names of the packages.
+@example
+```
+const { info } = require("npms-api");
+(async () => {
+	await info("cross-spawn");
+	//=> { analyzedAt: '2020-02-23T05:44:56.198Z', collected: { metadata: { name: "cross-spawn",   * scope: scoped" ... } ... } ... }
+})();
+```
 */
 export declare async function info(name: string): Promise<Result.Info>
 export declare async function info(names: string[]): Promise<Result.Info[]>
